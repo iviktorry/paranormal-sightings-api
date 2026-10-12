@@ -1,0 +1,15 @@
+{
+  "name": "scrimba-node",
+  "version": "1.0.0",
+  "description": "A Fullstack application for submitting and reading creepy paranormal sighting stories. Built with Node.js to practice full HTTP request handling, including **`GET`** data fetching and **`POST`** payload parsing.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
