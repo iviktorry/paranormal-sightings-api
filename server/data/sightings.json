@@ -1,0 +1,44 @@
+[
+  {
+    "id": "1",
+    "title": "The Pianist's Lament",
+    "location": "Edinburgh, UK",
+    "timeStamp": "20 March 2024 at 11:30",
+    "text": "We wandered into the skeleton of an abandoned theater, its air thick with forgotten breath. As we crept through its crumbling halls, a piano melody began to drift—low, haunting, almost imperceptible..."
+  },
+  {
+    "title": "The Phantom Warning",
+    "location": "Exeter, UK",
+    "timeStamp": "7 January 2025 at 09:30",
+    "text": "I was trying to get to sleep when the temperature in the room plummeted. A tall, shadowed figure stood at the foot of my bed, whispering a date I will never forget.",
+    "id": "2"
+  },
+  {
+    "title": "Whispers in the Fog",
+    "location": "London, UK",
+    "timeStamp": "14 October 2025 at 23:15",
+    "text": "Walking past Highgate Cemetery during a thick night fog, three distinct voices called out my name from behind the locked iron gates. Nobody was inside.",
+    "id": "3"
+  },
+  {
+    "title": "The Crying Shadow",
+    "location": "York, UK",
+    "timeStamp": "02 February 2026 at 03:00",
+    "text": "A dark figure was kneeling on the stairs of the old pub, sobbing quietly. When I stepped closer to offer help, it passed straight through the wooden step and vanished.",
+    "id": "4"
+  },
+  {
+    "title": "The Red Footsteps",
+    "location": "Dublin, Ireland",
+    "timeStamp": "11 May 2026 at 01:45",
+    "text": "Wet footprints appeared on the carpet leading toward my wardrobe, one by one, with absolute silence. The door was locked from the inside.",
+    "id": "5"
+  },
+  {
+    "title": "The Uninvited Guest",
+    "location": "Cardiff, UK",
+    "timeStamp": "30 August 2026 at 22:00",
+    "text": "Every night at exactly 10 PM, the rocking chair in the attic begins to move steadily. Last night, I saw the indentation of a person sitting on the cushion.",
+    "id": "6"
+  }
+]
