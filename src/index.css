@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+@theme {
+  --font-custom: "Frijole", system-ui;
+  --font-standard: "Poppins", sans-serif;
+}
