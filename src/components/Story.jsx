@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function Story() {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <article className="max-w-xs justify-self-center rounded-sm bg-white p-4 text-black lg:max-w-md">
+    <article className="max-w-xs justify-self-center rounded-md bg-white p-4 text-black lg:max-w-md">
       <p className="text-xs text-neutral-800">7 Jan 2025 at 9:30? Exeter, UK</p>
       <h2 className="my-1 text-lg font-bold">The phantom warning</h2>
       <div className="relative">

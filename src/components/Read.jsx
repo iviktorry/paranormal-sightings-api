@@ -14,7 +14,7 @@ export default function Sightings() {
   }, [stories]);
   return (
     <div className="flex flex-col gap-2">
-      <NavLink className="font-custom text-center font-semibold" to="/">
+      <NavLink className="font-custom text-center text-base font-semibold" to="/">
         From the Other Side
       </NavLink>
       <h1 className="font-custom text-center text-4xl">Sightings</h1>

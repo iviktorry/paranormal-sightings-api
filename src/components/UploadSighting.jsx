@@ -64,7 +64,10 @@ export default function UploadSighting() {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <NavLink className="font-custom text-center font-semibold" to="/">
+      <NavLink
+        className="font-custom text-center text-base font-semibold"
+        to="/"
+      >
         From the Other Side
       </NavLink>
 
@@ -76,7 +79,7 @@ export default function UploadSighting() {
         id="eventForm"
         action={handleSubmit}
 
-        className="mt-4 flex w-full max-w-2xl flex-col gap-4 rounded-md bg-stone-700 px-5 py-7"
+        className="mt-4 flex w-full max-w-xl flex-col gap-4 rounded-md bg-stone-700 px-5 py-7 lg:text-sm"
       >
         <div className="flex flex-col gap-4 md:flex-row">
           <div className={`${inputLabelStyle} flex-1`}>
