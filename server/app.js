@@ -18,6 +18,56 @@ function sendResponse(res, statusCode, contentType, payload) {
   res.end(payload);
 }
 
+async function getDataFromJSON() {
+  const fileData = await fs.readFile(JSONPath, "utf8");
+  return JSON.parse(fileData);
+}
+
+async function getBodyData(req) {
+  let body = "";
+  for await (const chunk of req) {
+    body += chunk;
+  }
+  return JSON.parse(body);
+}
+
+function handleGET(res) {
+  try {
+    const fileDataObj = getDataFromJSON();
+    sendResponse(res, 200, "application/json", JSON.stringify(fileDataObj));
+  } catch (error) {
+    console.log(`Error reading data: ${error}`);
+    sendResponse(
+      res,
+      500,
+      "application/json",
+      JSON.stringify({ error: "Unable to read data" }),
+    );
+  }
+}
+
+async function handlePOST(req, res) {
+  try {
+    const bodyObj = getBodyData(req);
+    const fileDataObj = getDataFromJSON();
+    fileDataObj.push(bodyObj);
+
+    await fs.writeFile(JSONPath, JSON.stringify(fileDataObj, null, 2), "utf8");
+
+    sendResponse(res, 201, "application/json", JSON.stringify(bodyObj));
+  } catch (error) {
+    console.log(`Error white receiving data: ${error}`);
+    sendResponse(
+      res,
+      400,
+      "application/json",
+      JSON.stringify({
+        error: "Invalid JSON request body",
+      }),
+    );
+  }
+}
+
 const server = http.createServer(async (req, res) => {
   setCORSPolicy(res);
 
@@ -29,50 +79,9 @@ const server = http.createServer(async (req, res) => {
 
   if (req.url === "/api") {
     if (req.method === "GET") {
-      try {
-        const fileData = await fs.readFile(JSONPath, "utf8");
-
-        sendResponse(res, 200, "application/json", fileData);
-      } catch (error) {
-        console.log(`Error reading data: ${error}`);
-        sendResponse(
-          res,
-          500,
-          "application/json",
-          JSON.stringify({ error: "Unable to read data" }),
-        );
-      }
+      handleGET(res);
     } else if (req.method === "POST") {
-      try {
-        let body = "";
-        for await (const chunk of req) {
-          body += chunk;
-        }
-        console.log(body);
-
-        const fileData = await fs.readFile(JSONPath, "utf8");
-        const fileDataParsed = JSON.parse(fileData);
-        const parsedBody = JSON.parse(body);
-        fileDataParsed.push(parsedBody);
-
-        await fs.writeFile(
-          JSONPath,
-          JSON.stringify(fileDataParsed, null, 2),
-          "utf8",
-        );
-
-        sendResponse(res, 201, "application/json", body);
-      } catch (error) {
-        console.log(`Error white receiving data: ${error}`);
-        sendResponse(
-          res,
-          400,
-          "application/json",
-          JSON.stringify({
-            error: "Invalid JSON request body",
-          }),
-        );
-      }
+      handlePOST(req, res);
     }
   }
 });
