@@ -31,9 +31,9 @@ async function getBodyData(req) {
   return JSON.parse(body);
 }
 
-function handleGET(res) {
+async function handleGET(res) {
   try {
-    const fileDataObj = getDataFromJSON();
+    const fileDataObj = await getDataFromJSON();
     sendResponse(res, 200, "application/json", JSON.stringify(fileDataObj));
   } catch (error) {
     console.log(`Error reading data: ${error}`);
@@ -48,8 +48,8 @@ function handleGET(res) {
 
 async function handlePOST(req, res) {
   try {
-    const bodyObj = getBodyData(req);
-    const fileDataObj = getDataFromJSON();
+    const fileDataObj = await getDataFromJSON();
+    const bodyObj = await getBodyData(req);
     fileDataObj.push(bodyObj);
 
     await fs.writeFile(JSONPath, JSON.stringify(fileDataObj, null, 2), "utf8");

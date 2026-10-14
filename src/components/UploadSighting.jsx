@@ -3,11 +3,11 @@ import { NavLink } from "react-router";
 
 export default function UploadSighting() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [statusMessage, setStatusMessage] = useState(null);
+  const [statusMessage, setStatusMessage] = useState("");
 
-  async function handleSubmit(formData, e) {
+  async function handleSubmit(formData) {
     setIsSubmitting(true);
-    setStatusMessage(null);
+    setStatusMessage("");
     const rawData = Object.fromEntries(formData);
 
     const formattedDate = new Date(rawData.datetime).toLocaleString("en-GB", {
@@ -34,7 +34,6 @@ export default function UploadSighting() {
       });
 
       if (response.ok) {
-        e.target.reset();
         setStatusMessage({
           type: "Success",
           message: "Your sighting was uploaded!",
@@ -144,7 +143,7 @@ export default function UploadSighting() {
           {isSubmitting ? "Uploading..." : "Submit"}
         </button>
         <div>
-          {statusMessage && (
+          {statusMessage && statusMessage.type === "Error" && (
             <p className="font-bold">
               {statusMessage.type}! {statusMessage.message}
             </p>

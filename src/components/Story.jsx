@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function Story({ location, timeStamp, title, text }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <article className="max-w-xs justify-self-center rounded-md bg-white p-4 text-black lg:max-w-md">
+    <article className="w-75 justify-self-center rounded-md bg-white p-4 text-black lg:w-md">
       <p className="text-xs text-neutral-800">
         {timeStamp}, {location}
       </p>

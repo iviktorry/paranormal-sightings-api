@@ -26,10 +26,10 @@ export default function Sightings() {
         From the Other Side
       </NavLink>
       <h1 className="font-custom text-center text-4xl">Sightings</h1>
-      <div className="grid items-center justify-center gap-4">
+      <div className="flex flex-col items-center justify-center gap-4">
         {stories.map((story) => (
           <Story
-            key={story.uuid}
+            key={story.title}
             location={story.location}
             timeStamp={story.timeStamp}
             title={story.title}
