@@ -26,7 +26,6 @@ export default function UploadSighting() {
       text: rawData.details,
     };
 
-    console.log(payload);
     try {
       const response = await fetch(`http://localhost:7000/api`, {
         method: "POST",
@@ -146,7 +145,7 @@ export default function UploadSighting() {
         </button>
         <div>
           {statusMessage && (
-            <p>
+            <p className="font-bold">
               {statusMessage.type}! {statusMessage.message}
             </p>
           )}

@@ -1,46 +1,80 @@
 import http from "node:http";
-import path from "node:path";
-import fs from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import fs from "node:fs/promises";
 
 const PORT = 7000;
-const dataPath = path.join(__dirname, "data", "sightings.json");
+const JSONPath = fileURLToPath(new URL("./data/data.json", import.meta.url));
 
-async function getSightings() {
-  try {
-    const filedata = await fs.readFile(dataPath, "utf8");
-    return JSON.parse(filedata);
-  } catch (error) {
-    console.error(`Error reading JSON: ${error}`);
-    return [];
-  }
-}
-const server = http.createServer(async (req, res) => {
+function setCORSPolicy(res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   res.setHeader("Content-Type", "application/json");
+}
+
+function sendResponse(res, statusCode, contentType, payload) {
+  res.setStatus = statusCode;
+  res.setHeader("Content-Type", contentType);
+  res.end(payload);
+}
+
+const server = http.createServer(async (req, res) => {
+  setCORSPolicy(res);
 
   if (req.method === "OPTIONS") {
-    res.statusCode = 204;
-    return res.end();
+    res.writeHead(200);
+    res.end();
+    return;
   }
 
   if (req.url === "/api") {
     if (req.method === "GET") {
-      const sightings = await getSightings();
-      res.statusCode = 200;
-      return res.end(JSON.stringify(sightings));
-    } else {
-      //
+      try {
+        const fileData = await fs.readFile(JSONPath, "utf8");
+
+        sendResponse(res, 200, "application/json", fileData);
+      } catch (error) {
+        console.log(`Error reading data: ${error}`);
+        sendResponse(
+          res,
+          500,
+          "application/json",
+          JSON.stringify({ error: "Unable to read data" }),
+        );
+      }
+    } else if (req.method === "POST") {
+      try {
+        let body = "";
+        for await (const chunk of req) {
+          body += chunk;
+        }
+        console.log(body);
+
+        const fileData = await fs.readFile(JSONPath, "utf8");
+        const fileDataParsed = JSON.parse(fileData);
+        const parsedBody = JSON.parse(body);
+        fileDataParsed.push(parsedBody);
+
+        await fs.writeFile(
+          JSONPath,
+          JSON.stringify(fileDataParsed, null, 2),
+          "utf8",
+        );
+
+        sendResponse(res, 201, "application/json", body);
+      } catch (error) {
+        console.log(`Error white receiving data: ${error}`);
+        sendResponse(
+          res,
+          400,
+          "application/json",
+          JSON.stringify({
+            error: "Invalid JSON request body",
+          }),
+        );
+      }
     }
   }
-
-  res.statusCode = 404;
-  res.end(JSON.stringify({ error: "Route not found" }));
 });
 
 server.listen(PORT);
