@@ -12,6 +12,9 @@ export default function App() {
       />
       <div className="absolute inset-0 -z-10 size-full bg-taupe-700/70 object-cover"></div>
       <Header />
+
+
+      
       <Main />
     </div>
   );
